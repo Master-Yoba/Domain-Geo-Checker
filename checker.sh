@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+die() { echo "Fatal: ${1}" >&2; exit 1; }
+deps=(curl jq)
+
+for dep in "${deps[@]}"; do
+  if ! command -v "${dep}" >/dev/null 2>&1; then
+    die "Missing required dependency: ${dep}"
+  fi
+done
+
 if [ -z "$1" ]; then
   echo "Usage: $0 domain.com"
   exit 1
